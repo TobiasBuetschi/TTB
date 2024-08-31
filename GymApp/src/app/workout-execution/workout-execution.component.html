@@ -1,0 +1,36 @@
+<div class="workout-execution">
+  <div class="timer">Workout-Zeit: {{ workoutTimer }} sec</div>
+
+  <div class="current-exercise" *ngIf="workout[currentExerciseIndex]">
+    <h2>{{ workout[currentExerciseIndex].exercise.name }}</h2>
+
+    <div
+      *ngFor="let set of workout[currentExerciseIndex].sets; let i = index"
+      class="set"
+    >
+      <input type="number" [(ngModel)]="set.reps" placeholder="Reps" />
+      <input type="number" [(ngModel)]="set.weight" placeholder="Weight" />
+      <button (click)="addDropSet(i)">Add Dropset</button>
+
+      <div *ngIf="set.dropSet" class="dropset">
+        <input
+          type="number"
+          [(ngModel)]="set.dropSet.reps"
+          placeholder="Dropset Reps"
+        />
+        <input
+          type="number"
+          [(ngModel)]="set.dropSet.weight"
+          placeholder="Dropset Weight"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button (click)="togglePause()">{{ isPaused ? "Work" : "Pause" }}</button>
+    <button (click)="nextExercise()">Next Exercise</button>
+  </div>
+
+  <div *ngIf="isPaused" class="pause-timer">Pause: {{ pauseTimer }} sec</div>
+</div>

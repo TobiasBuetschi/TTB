@@ -1,0 +1,9 @@
+<h2>Select the Bodyparts you like to train today</h2>
+<div *ngFor="let group of muscleGroups">
+  <label>
+    <input type="checkbox" [(ngModel)]="group.selected" /> {{ group.name }}
+  </label>
+</div>
+<button (click)="confirmSelection()" [disabled]="!isAnyGroupSelected">
+  Confirm Selection
+</button>
