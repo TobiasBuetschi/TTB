@@ -1,4 +1,11 @@
 <h2>How do you like to generate your Workout?</h2>
-<p>Selected Bodyparts: {{ selectedMuscleGroups.join(", ") }}</p>
-<button (click)="selectCustomWorkout()">Select Exercises</button>
-<button (click)="selectRandomWorkout()">Get random Exercises</button>
+
+<h3>Selected Muscle Groups:</h3>
+<ul>
+  <ng-container *ngFor="let group of selectedMuscleGroups">
+    <li>{{ group }}</li>
+  </ng-container>
+</ul>
+
+<button (click)="selectCustomWorkout()">Custom Workout</button>
+<button (click)="selectRandomWorkout()">Random Workout</button>

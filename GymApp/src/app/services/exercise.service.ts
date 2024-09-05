@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class ExerciseService {
   private exercises: Exercise[] = [
     // Brustübungen
-    { id: 'b1', name: 'Benchpress', category: 'Brust', type: 'Hauptübung' },
+    { id: 'b1', name: 'Benchpress', category: 'Chest', type: 'Hauptübung' },
     {
       id: 'b2',
       name: 'Dumbell Benchpress',

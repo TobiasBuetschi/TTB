@@ -1,16 +1,29 @@
 <div class="workout-execution">
-  <div class="timer">Workout-Zeit: {{ workoutTimer }} sec</div>
+  <div class="timer">Workout-Zeit: {{ formatWorkoutTime(workoutTimer) }}</div>
 
-  <div class="current-exercise" *ngIf="workout[currentExerciseIndex]">
-    <h2>{{ workout[currentExerciseIndex].exercise.name }}</h2>
+  <div
+    class="current-exercise"
+    *ngIf="workout.length > 0 && workout[currentExerciseIndex]"
+  >
+    <h2>
+      {{ workout[currentExerciseIndex]?.exercise?.name || "Unknown Exercise" }}
+    </h2>
 
     <div
-      *ngFor="let set of workout[currentExerciseIndex].sets; let i = index"
+      *ngFor="let set of workout[currentExerciseIndex]?.sets; let i = index"
       class="set"
     >
+      <h4>Set {{ i + 1 }}</h4>
       <input type="number" [(ngModel)]="set.reps" placeholder="Reps" />
       <input type="number" [(ngModel)]="set.weight" placeholder="Weight" />
       <button (click)="addDropSet(i)">Add Dropset</button>
+      <button
+        (click)="removeSet(currentExerciseIndex, i)"
+        [disabled]="workout[currentExerciseIndex].sets.length === 1"
+        class="remove-set-button"
+      >
+        Remove Set
+      </button>
 
       <div *ngIf="set.dropSet" class="dropset">
         <input
@@ -27,10 +40,36 @@
     </div>
   </div>
 
-  <div class="controls">
-    <button (click)="togglePause()">{{ isPaused ? "Work" : "Pause" }}</button>
-    <button (click)="nextExercise()">Next Exercise</button>
+  <div
+    *ngIf="workout.length === 0 || !workout[currentExerciseIndex]"
+    class="no-workout"
+  >
+    <p>No workout data available.</p>
   </div>
 
-  <div *ngIf="isPaused" class="pause-timer">Pause: {{ pauseTimer }} sec</div>
+  <div class="controls">
+    <div class="controls">
+      <button
+        *ngIf="workout.length > 0"
+        (click)="addSet()"
+        class="add-set-button"
+      >
+        Add Set
+      </button>
+    </div>
+    <button (click)="togglePause()">{{ isPaused ? "Work" : "Pause" }}</button>
+
+    <ng-container *ngIf="!isLastExercise; else lastExerciseButtons">
+      <button (click)="nextExercise()">Next Exercise</button>
+    </ng-container>
+
+    <ng-template #lastExerciseButtons>
+      <button (click)="addExercise()">Add Exercise</button>
+      <button (click)="endWorkout()">End Workout</button>
+    </ng-template>
+  </div>
+
+  <div *ngIf="isPaused" class="pause-timer">
+    Pause: {{ formatPauseTime(pauseTimer) }}
+  </div>
 </div>

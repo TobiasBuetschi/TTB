@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { WorkoutBuilderComponent } from './components/workout-builder/workout-builder.component';
 import { MuscleGroupSelectorComponent } from './components/muscle-group-selector/muscle-group-selector.component';
 import { WorkoutSelectorComponent } from './components/workout-selector/workout-selector.component';
@@ -9,30 +10,17 @@ import { WorkoutSelectorComponent } from './components/workout-selector/workout-
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     WorkoutBuilderComponent,
     MuscleGroupSelectorComponent,
     WorkoutSelectorComponent,
   ],
-  templateUrl: './app.component.html',
+  template: `
+    <h1>{{ title }}</h1>
+    <router-outlet></router-outlet>
+  `,
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'Workout App';
-  selectedMuscleGroups: string[] = [];
-  showMuscleGroupSelector = true;
-  showWorkoutSelector = false;
-  showWorkoutBuilder = false;
-  isRandomWorkout = false;
-
-  onMuscleGroupsSelected(groups: string[]) {
-    this.selectedMuscleGroups = groups;
-    this.showMuscleGroupSelector = false;
-    this.showWorkoutSelector = true;
-  }
-
-  onWorkoutTypeSelected(type: 'custom' | 'random') {
-    this.isRandomWorkout = type === 'random';
-    this.showWorkoutSelector = false;
-    this.showWorkoutBuilder = true;
-  }
 }

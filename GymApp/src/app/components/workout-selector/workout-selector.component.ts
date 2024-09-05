@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-workout-selector',
@@ -8,15 +9,45 @@ import { CommonModule } from '@angular/common';
   templateUrl: './workout-selector.component.html',
   styleUrls: ['./workout-selector.component.css'],
 })
-export class WorkoutSelectorComponent {
-  @Input() selectedMuscleGroups: string[] = [];
-  @Output() selectionMade = new EventEmitter<'custom' | 'random'>();
+export class WorkoutSelectorComponent implements OnInit {
+  selectedMuscleGroups: string[] = [];
+
+  constructor(private router: Router) {
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation && navigation.extras && navigation.extras.state) {
+      this.selectedMuscleGroups =
+        navigation.extras.state['selectedMuscleGroups'] || [];
+    }
+  }
+
+  ngOnInit() {
+    console.log('Received selectedMuscleGroups:', this.selectedMuscleGroups);
+  }
 
   selectCustomWorkout() {
-    this.selectionMade.emit('custom');
+    this.router.navigate(['/workout-builder'], {
+      state: {
+        selectedMuscleGroups: this.selectedMuscleGroups,
+        isRandomWorkout: false,
+      },
+    });
   }
 
   selectRandomWorkout() {
-    this.selectionMade.emit('random');
+    this.router.navigate(['/workout-builder'], {
+      state: {
+        selectedMuscleGroups: this.selectedMuscleGroups,
+        isRandomWorkout: true,
+      },
+    });
+  }
+
+  private navigateToWorkoutBuilder(isRandomWorkout: boolean) {
+    this.router.navigate(['/workout-builder'], {
+      state: {
+        selectedMuscleGroups: this.selectedMuscleGroups,
+        isRandomWorkout: isRandomWorkout,
+      },
+    });
   }
 }

@@ -18,8 +18,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./workout-builder.component.css'],
 })
 export class WorkoutBuilderComponent implements OnInit {
-  @Input() selectedMuscleGroups: string[] = [];
-  @Input() isRandomWorkout = false;
+  selectedMuscleGroups: string[] = [];
+  isRandomWorkout = false;
   exercises: Exercise[] = [];
   currentWorkout: Set[] = [];
   selectedExercises: (Exercise | null)[] = [];
@@ -29,18 +29,44 @@ export class WorkoutBuilderComponent implements OnInit {
     private router: Router,
     private exerciseService: ExerciseService,
     private workoutService: WorkoutService
-  ) {}
+  ) {
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation && navigation.extras && navigation.extras.state) {
+      this.selectedMuscleGroups =
+        navigation.extras.state['selectedMuscleGroups'] || [];
+      this.isRandomWorkout =
+        navigation.extras.state['isRandomWorkout'] || false;
+    }
+  }
 
   ngOnInit(): void {
-    this.exerciseService.getExercises().subscribe((exercises: Exercise[]) => {
-      this.exercises = exercises.filter((exercise) =>
-        this.selectedMuscleGroups.includes(exercise.category)
-      );
-      if (this.isRandomWorkout) {
-        this.generateRandomWorkout();
-      }
-      this.selectedExercises = new Array(this.currentWorkout.length).fill(null);
-    });
+    console.log('Selected muscle groups:', this.selectedMuscleGroups);
+    console.log('Is random workout:', this.isRandomWorkout);
+
+    this.exerciseService.getExercises().subscribe(
+      (exercises: Exercise[]) => {
+        console.log('All exercises:', exercises);
+        this.exercises = exercises.filter((exercise) =>
+          this.selectedMuscleGroups.includes(exercise.category)
+        );
+        console.log('Filtered exercises:', this.exercises);
+
+        if (this.exercises.length === 0) {
+          console.warn(
+            'No exercises found for selected muscle groups. Showing all exercises.'
+          );
+          this.exercises = exercises;
+        }
+
+        if (this.isRandomWorkout) {
+          this.generateRandomWorkout();
+        }
+        this.selectedExercises = new Array(this.currentWorkout.length).fill(
+          null
+        );
+      },
+      (error) => console.error('Error fetching exercises:', error)
+    );
   }
 
   generateRandomWorkout() {
@@ -169,28 +195,19 @@ export class WorkoutBuilderComponent implements OnInit {
     }
   }
   startWorkout(): void {
-    console.log('startWorkout method called');
-    console.log('Current workout:', this.currentWorkout);
-
-    const workoutWithExercises = this.currentWorkout.map((set) => ({
-      exercise: this.exercises.find((e) => e.id === set.exerciseId)!,
-      sets: [{ reps: 0, weight: 0, exerciseId: set.exerciseId }],
+    const workoutWithExercises = this.currentWorkout.map((exercise) => ({
+      exercise: this.exercises.find((e) => e.id === exercise.exerciseId),
+      sets: Array(exercise.sets)
+        .fill({})
+        .map(() => ({ reps: 0, weight: 0 })),
     }));
 
     console.log('Workout with exercises:', workoutWithExercises);
 
-    this.router
-      .navigate(['/workout-execution'], {
-        state: { workout: workoutWithExercises },
-      })
-      .then(() => {
-        console.log('Navigation successful');
-      })
-      .catch((error) => {
-        console.error('Navigation failed:', error);
-      });
+    this.router.navigate(['/workout-execution'], {
+      state: { workout: workoutWithExercises },
+    });
   }
-
   saveWorkout(): void {
     const workout: WorkoutSession = {
       id: Date.now().toString(),

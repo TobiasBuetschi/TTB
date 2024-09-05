@@ -10,3 +10,12 @@ export interface WorkoutSession {
   date: Date;
   sets: Set[];
 }
+
+export interface SetII {
+  reps: number;
+  weight: number;
+  dropSet?: {
+    reps: number;
+    weight: number;
+  };
+}
