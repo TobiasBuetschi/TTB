@@ -5,14 +5,21 @@ import { WorkoutBuilderComponent } from './components/workout-builder/workout-bu
 import { WorkoutExecutionComponent } from './workout-execution/workout-execution.component';
 import { WorkoutSummaryComponent } from './workout-summary/workout-summary.component';
 import { RegisterComponent } from './register/register.component';
+import { HomeComponent } from './components/home-page/home-page.component';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
+  { path: 'home-page', component: HomeComponent },
+  /*{ path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
+  { path: 'logout', loadChildren: () => import('./logout/logout.module').then(m => m.LogoutModule) },
+  { path: 'forgot-password', loadChildren: () => import('./forgot-password/forgot-password.module').then(*/
+  { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '', redirectTo: '/muscle-group-selector', pathMatch: 'full' },
+  { path: '', redirectTo: '/home-page', pathMatch: 'full' },
   { path: 'muscle-group-selector', component: MuscleGroupSelectorComponent },
   { path: 'workout-selector', component: WorkoutSelectorComponent },
   { path: 'workout-builder', component: WorkoutBuilderComponent },
   { path: 'workout-execution', component: WorkoutExecutionComponent },
   { path: 'workout-summary', component: WorkoutSummaryComponent },
-  { path: '**', redirectTo: '/muscle-group-selector' },
+  { path: '**', redirectTo: '/home-page' },
 ];
