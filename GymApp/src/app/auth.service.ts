@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,20 +17,14 @@ export class AuthService {
     this._isLoggedIn.next(!!token);
   }
 
-  register(username: string, email: string, password: string): Observable<any> {
+  register(user: {
+    username: string;
+    email: string;
+    password: string;
+  }): Observable<any> {
     return this.http
-      .post<any>(`${this.apiUrl}/users/register`, { username, email, password })
-      .pipe(
-        catchError((error) => {
-          console.error('Registration error', error);
-          return throwError(
-            () =>
-              new Error(
-                error.error.message || 'Registration failed. Please try again.'
-              )
-          );
-        })
-      );
+      .post<any>(`${this.apiUrl}/users/register`, user)
+      .pipe(catchError(this.handleError));
   }
 
   login(email: string, password: string): Observable<any> {
@@ -44,22 +37,14 @@ export class AuthService {
             this._isLoggedIn.next(true);
           }
         }),
-        catchError((error) => {
-          console.error('Login error', error);
-          throw error;
-        })
+        catchError(this.handleError)
       );
   }
 
   forgotPassword(email: string): Observable<any> {
     return this.http
       .post<any>(`${this.apiUrl}/forgot-password`, { email })
-      .pipe(
-        catchError((error) => {
-          console.error('Forgot password error', error);
-          throw error;
-        })
-      );
+      .pipe(catchError(this.handleError));
   }
 
   logout(): void {
@@ -70,5 +55,20 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return this._isLoggedIn.value;
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side or network error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Backend returned an unsuccessful response code
+      errorMessage =
+        error.error.message ||
+        `Server returned code ${error.status}, error message is: ${error.message}`;
+    }
+    console.error('HTTP error:', errorMessage);
+    return throwError(() => new Error(errorMessage));
   }
 }

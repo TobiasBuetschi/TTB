@@ -5,17 +5,26 @@ const cors = require('cors');
 
 const app = express();
 const port = 3000;
+const password = encodeURIComponent('Tiger187BIT!');
+const uri = `mongodb://turborudy:${password}@localhost:27017/fitness_app?authSource=admin`;
+
 
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/fitness_app', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  user: 'turborudy',
-  pass: 'Tiger187BIT!'
-});
+mongoose.connect(uri)
+  .then(() => console.log('Connection to MongoDB is established'))
+  .catch(err => {
+    console.error('Connecting to MongoDB failed:', err.message);
+    // Zusätzliche Informationen für Debugging
+    console.error('Whole error:', err);
+    console.error('Connection-URI (without password):', uri.replace(password, '****'));
+  });
 
+// Fügen Sie einen Ereignislistener für Verbindungsfehler hinzu
+mongoose.connection.on('error', err => {
+  console.error('MongoDB Connecting Error:', err);
+});
 // User Schema
 const UserSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },

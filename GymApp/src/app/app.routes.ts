@@ -7,9 +7,13 @@ import { WorkoutSummaryComponent } from './workout-summary/workout-summary.compo
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './components/home-page/home-page.component';
 import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { WorkoutHistoryComponent } from './workout-history/workout-history.component';
 
 export const routes: Routes = [
   { path: 'home-page', component: HomeComponent },
+  { path: 'dashboard', component: DashboardComponent },
+
   /*{ path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
   { path: 'logout', loadChildren: () => import('./logout/logout.module').then(m => m.LogoutModule) },
   { path: 'forgot-password', loadChildren: () => import('./forgot-password/forgot-password.module').then(*/
@@ -21,5 +25,6 @@ export const routes: Routes = [
   { path: 'workout-builder', component: WorkoutBuilderComponent },
   { path: 'workout-execution', component: WorkoutExecutionComponent },
   { path: 'workout-summary', component: WorkoutSummaryComponent },
+  { path: 'workout-history', component: WorkoutHistoryComponent },
   { path: '**', redirectTo: '/home-page' },
 ];

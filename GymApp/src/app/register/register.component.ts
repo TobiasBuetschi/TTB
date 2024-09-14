@@ -35,18 +35,22 @@ export class RegisterComponent {
   onSubmit() {
     if (this.registerForm.valid) {
       const { username, email, password } = this.registerForm.value;
-      this.authService.register(username, email, password).subscribe({
-        next: () => {
-          console.log('Registration successful');
+      this.authService.register({ username, email, password }).subscribe({
+        next: (response) => {
+          console.log('Registration successful', response);
           this.router.navigate(['/login']);
         },
         error: (error) => {
           console.error('Registration failed', error);
-          this.errorMessage = 'Registration failed. Please try again.';
+          this.errorMessage = error.message;
         },
       });
     } else {
       this.errorMessage = 'Please fill out all required fields correctly.';
     }
+  }
+  onSignIn() {
+    console.log('Sign in clicked');
+    this.router.navigate(['/login']);
   }
 }
