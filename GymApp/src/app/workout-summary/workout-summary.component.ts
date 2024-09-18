@@ -4,6 +4,31 @@ import { Router } from '@angular/router';
 import { WorkoutService } from '../services/workout.service';
 import { WorkoutSession } from '../models/workout.model';
 
+interface WorkoutSummary {
+  id?: string;
+  date?: Date;
+  duration: number;
+  exercises: {
+    name: string;
+    sets: {
+      reps: number;
+      weight: number;
+      dropSet?: {
+        reps: number;
+        weight: number;
+      } | null;
+    }[];
+  }[];
+  sets?: {
+    reps: number;
+    weight: number;
+    dropSet?: {
+      reps: number;
+      weight: number;
+    } | null;
+  }[];
+}
+
 @Component({
   selector: 'app-workout-summary',
   standalone: true,
@@ -12,17 +37,26 @@ import { WorkoutSession } from '../models/workout.model';
   styleUrls: ['./workout-summary.component.css'],
 })
 export class WorkoutSummaryComponent implements OnInit {
-  workoutSummary?: WorkoutSession;
+  workoutSummary?: WorkoutSummary;
 
   constructor(private router: Router, private workoutService: WorkoutService) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation && navigation.extras && navigation.extras.state) {
-      this.workoutSummary = navigation.extras.state['summary'];
+      this.workoutSummary = <WorkoutSummary>navigation.extras.state['summary'];
+      if (this.workoutSummary) {
+        this.workoutSummary.id =
+          this.workoutSummary.id || Date.now().toString();
+        this.workoutSummary.date = this.workoutSummary.date || new Date();
+        this.workoutSummary.sets = this.workoutSummary.exercises.flatMap(
+          (e) => e.sets
+        );
+      }
     }
   }
 
   ngOnInit(): void {
     if (!this.workoutSummary) {
+      console.log('No workout summary available');
       this.router.navigate(['/']);
     } else {
       console.log('Workout summary:', this.workoutSummary);
@@ -31,7 +65,13 @@ export class WorkoutSummaryComponent implements OnInit {
 
   saveWorkout(): void {
     if (this.workoutSummary) {
-      this.workoutService.addWorkout(this.workoutSummary).subscribe({
+      const workoutSession = <WorkoutSession>{
+        id: this.workoutSummary.id || Date.now().toString(),
+        date: this.workoutSummary.date || new Date(),
+        duration: this.workoutSummary.duration,
+        sets: this.workoutSummary.sets || [],
+      };
+      this.workoutService.addWorkout(workoutSession).subscribe({
         next: (savedWorkout) => {
           console.log('Workout saved successfully', savedWorkout);
           this.router.navigate(['/dashboard']);

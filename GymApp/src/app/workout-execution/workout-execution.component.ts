@@ -3,26 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ExerciseService } from '../services/exercise.service';
-import { SetII } from '../models/workout.model';
+import { SetII, SetIII } from '../models/workout.model';
 import { Exercise } from '../models/exercise.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ExerciseSelectionComponent } from '../exercise-selection/exercise-selection.component';
-
-/*interface Set {
-  exerciseId: string;
-  reps: number;
-  weight: number;
-  dropSet?: {
-    reps: number;
-    weight: number;
-  };
-}
-
-interface Exercise {
-  id: string;
-  name: string;
-  // ... andere Eigenschaften
-}*/
 
 @Component({
   selector: 'app-workout-execution',
@@ -32,7 +16,7 @@ interface Exercise {
   styleUrls: ['./workout-execution.component.css'],
 })
 export class WorkoutExecutionComponent implements OnInit {
-  workout: { exercise: Exercise; sets: SetII[] }[] = [];
+  workout: { exercise: Exercise; sets: SetIII[] }[] = [];
   currentExerciseIndex = 0;
   workoutTimer = 0;
   pauseTimer = 0;
@@ -67,7 +51,6 @@ export class WorkoutExecutionComponent implements OnInit {
 
     if (!this.workout || this.workout.length === 0) {
       console.error('ngOnInit - No workout data available');
-      // Hier könnten Sie zur vorherigen Seite zurücknavigieren oder eine Fehlermeldung anzeigen
       return;
     }
 

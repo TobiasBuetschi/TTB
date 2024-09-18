@@ -199,4 +199,8 @@ export class ExerciseService {
       (exercise) => exercise.category === category && exercise.type === type
     );
   }
+
+  getExerciseById(id: string): Exercise | undefined {
+    return this.exercises.find((exercise) => exercise.id === id);
+  }
 }

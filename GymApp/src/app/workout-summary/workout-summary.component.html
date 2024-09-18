@@ -22,7 +22,7 @@
           <td>{{ set.reps }}</td>
           <td>{{ set.weight }}</td>
           <td *ngIf="set.dropSet">
-            {{ set.dropSet.reps }} reps {{ set.dropSet.weight }}
+            {{ set.dropSet.reps }} reps {{ set.dropSet.weight }} kg
           </td>
           <td *ngIf="!set.dropSet">-</td>
         </tr>
@@ -35,3 +35,5 @@
     <button (click)="deleteWorkout()">Delete Workout</button>
   </div>
 </div>
+
+<div *ngIf="!workoutSummary">No workout summary available.</div>

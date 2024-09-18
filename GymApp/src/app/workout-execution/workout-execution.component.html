@@ -6,7 +6,7 @@
     *ngIf="workout.length > 0 && workout[currentExerciseIndex]"
   >
     <h2>
-      {{ workout[currentExerciseIndex]?.exercise?.name || "Unknown Exercise" }}
+      {{ workout[currentExerciseIndex].exercise.name || "Unknown Exercise" }}
     </h2>
 
     <div
