@@ -1,9 +1,23 @@
-<h2>Select the Bodyparts you like to train today</h2>
-<div *ngFor="let group of muscleGroups">
-  <label>
-    <input type="checkbox" [(ngModel)]="group.selected" /> {{ group.name }}
-  </label>
+<div class="muscle-group-selector">
+  <h2>Select the Bodyparts you like to train today</h2>
+  <div class="muscle-groups">
+    <div *ngFor="let group of muscleGroups" class="muscle-group">
+      <input
+        type="checkbox"
+        [id]="group.name"
+        [(ngModel)]="group.selected"
+        hidden
+      />
+      <label [for]="group.name" [class.selected]="group.selected">
+        {{ group.name }}
+      </label>
+    </div>
+  </div>
+  <button
+    (click)="confirmSelection()"
+    [disabled]="!isAnyGroupSelected"
+    class="confirm-button"
+  >
+    Confirm Selection
+  </button>
 </div>
-<button (click)="confirmSelection()" [disabled]="!isAnyGroupSelected">
-  Confirm Selection
-</button>

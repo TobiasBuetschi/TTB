@@ -1,37 +1,24 @@
-<div
-  class="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 flex flex-col justify-center items-center p-4"
->
-  <div class="bg-white p-8 rounded-lg shadow-xl text-center max-w-md w-full">
-    <h1 class="text-4xl font-bold text-gray-800 mb-4">{{ title }}</h1>
-    <p class="text-xl text-gray-600 mb-8">{{ subtitle }}</p>
+<div class="home-container">
+  <div class="content-box">
+    <h1>{{ title }}</h1>
+    <p class="subtitle">{{ subtitle }}</p>
 
-    <div *ngIf="!isLoggedIn()" class="space-y-4">
-      <button
-        (click)="navigateToLogin()"
-        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"
-      >
+    <div *ngIf="!isLoggedIn()" class="auth-buttons">
+      <button (click)="navigateToLogin()" class="sign-in-button">
         Sign in
       </button>
-      <button
-        (click)="navigateToRegister()"
-        class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"
-      >
+      <button (click)="navigateToRegister()" class="register-button">
         Register
       </button>
     </div>
 
-    <div *ngIf="isLoggedIn()" class="space-y-4">
-      <p class="text-lg text-gray-700">Logged in</p>
-      <button
-        (click)="logout()"
-        class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"
-      >
-        Logout
-      </button>
+    <div *ngIf="isLoggedIn()" class="logged-in-content">
+      <p class="logged-in-text">Logged in</p>
+      <button (click)="logout()" class="logout-button">Logout</button>
     </div>
   </div>
 
-  <div class="mt-8 text-white text-center">
-    <p class="text-sm">© {{ currentYear }} TTB. All rights reserved.</p>
+  <div class="footer">
+    <p>© {{ currentYear }} TTB. All rights reserved.</p>
   </div>
 </div>

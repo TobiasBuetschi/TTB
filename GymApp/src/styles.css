@@ -43,36 +43,48 @@
   font-style: normal;
 }*/
 
-body {
-  margin: auto;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  overflow: auto;
+:root {
+  --primary-color: #02045e;
+  --secondary-color: #208eafc9;
+  --text-color: #ffffff;
   background: linear-gradient(
-    315deg,
-    rgb(1, 5, 56) 3%,
-    rgb(8, 129, 209) 38%,
-    rgba(48, 238, 226, 1) 68%,
-    rgb(7, 194, 138) 98%
+    -45deg,
+    var(--primary-color),
+    var(--secondary-color)
   );
-  animation: gradient 10s ease infinite;
-  background-size: 400% 400%;
-  background-attachment: fixed;
+  height: 100vh;
+  width: 100vw;
 }
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
-}
-.container {
-  max-width: 1100px;
+body {
   margin: auto;
-  overflow: hidden;
-  padding: 0 20px;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  color: var(--text-color);
+}
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+div {
+  font-family: "Kanit", sans-serif !important;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: none;
+  color: var(--text-color);
+  border: 5px linear-gradient(-45deg, #00039c, #23abd5c9);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
 }

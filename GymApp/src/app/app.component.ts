@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { WorkoutBuilderComponent } from './components/workout-builder/workout-builder.component';
 import { MuscleGroupSelectorComponent } from './components/muscle-group-selector/muscle-group-selector.component';
 import { WorkoutSelectorComponent } from './components/workout-selector/workout-selector.component';
+import { HeaderComponent } from './header/header.component';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +12,19 @@ import { WorkoutSelectorComponent } from './components/workout-selector/workout-
   imports: [
     CommonModule,
     RouterModule,
+    HeaderComponent,
     WorkoutBuilderComponent,
     MuscleGroupSelectorComponent,
     WorkoutSelectorComponent,
   ],
   template: `
-    <h1>{{ title }}</h1>
-    <router-outlet></router-outlet>
+    <app-header></app-header>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
   `,
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'Workout App';
+  title = 'TTB';
 }
