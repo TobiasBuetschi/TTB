@@ -1,49 +1,59 @@
-<h2>Workout Builder</h2>
+<div class="workout-builder-container">
+  <div class="workout-builder-box">
+    <h2>Workout Builder</h2>
 
-<div *ngIf="currentWorkout.length > 0">
-  <h3>Current Workout</h3>
-  <ul cdkDropList (cdkDropListDropped)="drop($event)">
-    <li *ngFor="let set of currentWorkout; let i = index" cdkDrag>
-      {{ getExerciseName(set.exerciseId) }}
-      <label for="sets-{{ i }}">Sets: </label>
-      <input
-        type="number"
-        [(ngModel)]="set.sets"
-        [placeholder]="
-          getExerciseType(set.exerciseId) === 'Hauptübung' ? '4' : '3'
-        "
-      />
-      <button (click)="replaceExercise(i)" [disabled]="!selectedExercises[i]">
-        Replace
-      </button>
-      <select [(ngModel)]="selectedExercises[i]">
-        <option [ngValue]="null">Select Exercise</option>
-        <option *ngFor="let exercise of exercises" [ngValue]="exercise">
+    <div *ngIf="currentWorkout.length > 0">
+      <h3>Current Workout</h3>
+      <ul cdkDropList (cdkDropListDropped)="drop($event)">
+        <li *ngFor="let set of currentWorkout; let i = index" cdkDrag>
+          {{ getExerciseName(set.exerciseId) }}
+          <label for="sets-{{ i }}">Sets: </label>
+          <input
+            type="number"
+            [(ngModel)]="set.sets"
+            [placeholder]="
+              getExerciseType(set.exerciseId) === 'Hauptübung' ? '4' : '3'
+            "
+          />
+          <button
+            (click)="replaceExercise(i)"
+            [disabled]="!selectedExercises[i]"
+          >
+            Replace
+          </button>
+          <select [(ngModel)]="selectedExercises[i]">
+            <option [ngValue]="null">Select Exercise</option>
+            <option *ngFor="let exercise of exercises" [ngValue]="exercise">
+              {{ exercise.name }}
+            </option>
+          </select>
+          <span
+            class="remove-icon"
+            (click)="removeExercise(i)"
+            title="Entfernen"
+            >✖</span
+          >
+          <span class="drag-handle" cdkDragHandle title="Ziehen zum Verschieben"
+            >☰</span
+          >
+        </li>
+      </ul>
+    </div>
+
+    <button (click)="toggleAvailableExercises()">Add Exercise</button>
+
+    <div *ngIf="showAvailableExercises">
+      <h3>Exercises</h3>
+      <ul>
+        <li *ngFor="let exercise of exercises">
           {{ exercise.name }}
-        </option>
-      </select>
-      <span class="remove-icon" (click)="removeExercise(i)" title="Entfernen"
-        >✖</span
-      >
-      <span class="drag-handle" cdkDragHandle title="Ziehen zum Verschieben"
-        >☰</span
-      >
-    </li>
-  </ul>
+          <button (click)="addExerciseToWorkout(exercise)">Add</button>
+        </li>
+      </ul>
+    </div>
+
+    <button (click)="startWorkout()" [disabled]="currentWorkout.length === 0">
+      Start
+    </button>
+  </div>
 </div>
-
-<button (click)="toggleAvailableExercises()">Add Exercise</button>
-
-<div *ngIf="showAvailableExercises">
-  <h3>Exercises</h3>
-  <ul>
-    <li *ngFor="let exercise of exercises">
-      {{ exercise.name }}
-      <button (click)="addExerciseToWorkout(exercise)">Add</button>
-    </li>
-  </ul>
-</div>
-
-<button (click)="startWorkout()" [disabled]="currentWorkout.length === 0">
-  Start
-</button>

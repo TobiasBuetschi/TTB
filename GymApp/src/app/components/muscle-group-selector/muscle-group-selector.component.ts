@@ -12,11 +12,23 @@ import { Router } from '@angular/router';
 })
 export class MuscleGroupSelectorComponent {
   muscleGroups = [
-    { name: 'Chest', selected: false },
-    { name: 'Back', selected: false },
-    { name: 'Biceps', selected: false },
-    { name: 'Triceps', selected: false },
-    { name: 'Shoulder', selected: false },
+    { name: 'Chest', selected: false, image: 'assets/MuscleGroups/chest.png' },
+    { name: 'Back', selected: false, image: 'assets/MuscleGroups/back.png' },
+    {
+      name: 'Biceps',
+      selected: false,
+      image: 'assets/MuscleGroups/biceps.png',
+    },
+    {
+      name: 'Triceps',
+      selected: false,
+      image: 'assets/MuscleGroups/triceps.png',
+    },
+    {
+      name: 'Shoulders',
+      selected: false,
+      image: 'assets/MuscleGroups/shoulder.png',
+    },
   ];
 
   constructor(private router: Router) {}

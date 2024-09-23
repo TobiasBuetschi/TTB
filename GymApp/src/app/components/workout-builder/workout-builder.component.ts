@@ -113,7 +113,7 @@ export class WorkoutBuilderComponent implements OnInit {
     const muscleGroupConfig: Record<string, [number, number]> = {
       Chest: [2, 2],
       Back: [3, 2],
-      Shoulder: [1, 2],
+      Shoulders: [1, 2],
       Biceps: [0, 0],
       Triceps: [0, 0],
     };

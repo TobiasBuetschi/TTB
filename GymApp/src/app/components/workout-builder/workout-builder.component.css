@@ -1,7 +1,130 @@
-button {
-  height: 120px;
+.workout-builder-container {
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem auto 0;
 }
 
-button:hover {
+.workout-builder-box {
+  width: 75vw;
+  height: 75vh;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  text-align: center;
+  max-width: 28rem;
+  width: 100%;
+}
+
+button {
+  width: 300px;
+  padding: 15px 30px;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 24px;
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 18px;
+  color: #34495e;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+li {
+  border: 2px solid var(--secondary-color);
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+input[type="number"] {
+  width: 50px;
+  padding: 5px;
+  margin: 0 10px;
+}
+
+select {
+  padding: 5px;
+  margin-left: 10px;
+}
+
+button:hover:not(:disabled) {
   background-color: var(--primary-color);
+}
+
+button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.remove-icon,
+.drag-handle {
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 18px;
+}
+
+.remove-icon:hover,
+.drag-handle:hover {
+  color: #e74c3c;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.workout-list.cdk-drop-list-dragging .workout-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@media (max-width: 600px) {
+  .workout-builder-box {
+    padding: 20px;
+  }
+
+  button {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  select,
+  input[type="number"] {
+    margin-top: 10px;
+  }
 }

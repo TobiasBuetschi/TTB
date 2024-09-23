@@ -1,0 +1,73 @@
+.workout-selector-container {
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem auto 0;
+}
+
+.workout-selector-box {
+  width: 75vw;
+  height: 75vh;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  text-align: center;
+  max-width: 28rem;
+  width: 100%;
+}
+
+h2 {
+  font-size: 24px;
+  color: var(--text-color);
+  margin-bottom: 30px;
+}
+
+h3 {
+  font-size: 18px;
+  color: var(--text-color);
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+li {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  padding: 8px 15px;
+  margin: 5px;
+  border-radius: 20px;
+  display: inline-block;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: var(--primary-color);
+}
+
+@media (max-width: 600px) {
+  .workout-selector-box {
+    padding: 20px;
+  }
+
+  button {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+button {
+  width: 300px;
+  padding: 15px 30px;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 18px;
+  font-weight: bold;
+}

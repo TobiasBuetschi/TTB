@@ -57,7 +57,7 @@
 }
 
 body {
-  margin: auto;
+  margin: 60px auto;
   overflow: auto;
   display: flex;
   justify-content: center;

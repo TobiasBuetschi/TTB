@@ -1,12 +1,21 @@
 .dashboard-container {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 4rem auto 0;
 }
 
+.dashboard-box {
+  width: 75vw;
+  height: 75vh;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  text-align: center;
+  max-width: 28rem;
+  width: 100%;
+}
 h1 {
   font-size: 3.5rem;
   font-weight: bold;
@@ -16,11 +25,14 @@ h1 {
 .button-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
   gap: 1rem;
 }
 
 button {
   height: 120px;
+  width: 200px;
 }
 
 button:hover {

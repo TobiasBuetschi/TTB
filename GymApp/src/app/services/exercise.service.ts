@@ -106,31 +106,31 @@ export class ExerciseService {
     {
       id: 's1',
       name: 'Shoulderpress',
-      category: 'Shoulder',
+      category: 'Shoulders',
       type: 'Hauptübung',
     },
     {
       id: 's2',
       name: 'Machine Shoulderpress',
-      category: 'Shoulder',
+      category: 'Shoulders',
       type: 'Hauptübung',
     },
     {
       id: 's3',
       name: 'Sideraises',
-      category: 'Shoulder',
+      category: 'Shoulders',
       type: 'Isolationsübung',
     },
     {
       id: 's4',
       name: 'Machine reverse Butterflys',
-      category: 'Shoulder',
+      category: 'Shoulders',
       type: 'Isolationsübung',
     },
     {
       id: 's5',
       name: 'Cable reverse Butterflys',
-      category: 'Shoulder',
+      category: 'Shoulders',
       type: 'Isolationsübung',
     },
 

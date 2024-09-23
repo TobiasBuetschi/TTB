@@ -2,7 +2,7 @@
   min-height: 100vh;
   justify-content: center;
   align-items: center;
-  padding: 4rem auto 0;
+  padding: 6rem auto 0;
 }
 
 .login-box {
@@ -87,8 +87,6 @@ input:focus {
 
 .submit-button:focus {
   outline: none;
-  ring: 2px solid var(--primary-color);
-  ring-offset: 2px;
 }
 
 .forgot-password,
