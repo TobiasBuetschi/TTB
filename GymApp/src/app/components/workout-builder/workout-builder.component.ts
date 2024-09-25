@@ -157,21 +157,28 @@ export class WorkoutBuilderComponent implements OnInit {
   }
 
   addExerciseToWorkout(exercise: Exercise): void {
-    this.currentWorkout.push({
-      exerciseId: exercise.id,
-      sets: 1,
-      reps: 0,
-      weight: 0,
-    });
-    this.selectedExercises.push(null);
+    if (!this.currentWorkout.some((set) => set.exerciseId === exercise.id)) {
+      this.currentWorkout.push({
+        exerciseId: exercise.id,
+        sets: 1,
+        reps: 0,
+        weight: 0,
+      });
+      this.selectedExercises.push(null);
+    }
   }
 
   replaceExercise(index: number): void {
     const newExercise = this.selectedExercises[index];
-    if (newExercise) {
+    if (
+      newExercise &&
+      !this.currentWorkout.some((set) => set.exerciseId === newExercise.id)
+    ) {
       this.currentWorkout[index] = {
-        ...this.currentWorkout[index],
-        sets: this.currentWorkout[index].sets + 1,
+        exerciseId: newExercise.id,
+        sets: this.currentWorkout[index].sets,
+        reps: 0,
+        weight: 0,
       };
       this.selectedExercises[index] = null;
     }
@@ -201,6 +208,25 @@ export class WorkoutBuilderComponent implements OnInit {
         this.selectedExercises[index + 1],
         this.selectedExercises[index],
       ];
+    }
+  }
+
+  getAvailableExercises(): Exercise[] {
+    const selectedExerciseIds = this.currentWorkout.map(
+      (set) => set.exerciseId
+    );
+    return this.exercises.filter(
+      (exercise) => !selectedExerciseIds.includes(exercise.id)
+    );
+  }
+
+  incrementSets(index: number): void {
+    this.currentWorkout[index].sets++;
+  }
+
+  decrementSets(index: number): void {
+    if (this.currentWorkout[index].sets > 1) {
+      this.currentWorkout[index].sets--;
     }
   }
   startWorkout(): void {
@@ -239,5 +265,62 @@ export class WorkoutBuilderComponent implements OnInit {
   ): 'Hauptübung' | 'Isolationsübung' | undefined {
     const exercise = this.exercises.find((e) => e.id === exerciseId);
     return exercise?.type;
+  }
+
+  getExerciseImage(exerciseId: string): string {
+    const baseUrl = 'assets/exercisePictures/';
+    const defaultImage = 'default-exercise.jpg';
+
+    const imageMap: { [key: string]: string } = {
+      // Brustübungen
+      b1: 'Benchpress.jpeg',
+      b2: 'Dumbell Benchpress.jpeg',
+      b3: 'Incline Benchpress.jpeg',
+      b4: 'InclineDumbellBenchpress.jpeg',
+      b5: 'ButterflyNeutral.jpeg',
+      b6: 'ButteflyHighLow.jpeg',
+      b7: 'ButterflyLowHigh.jpeg',
+      b8: 'DumbellButterflys.jpeg',
+      b9: 'ButterflyMachine.jpeg',
+
+      // Rückenübungen
+      r1: 'PullUp.jpeg',
+      r2: 'DumbellRowOnBench.jpeg',
+      r3: 'DumbellRow2.jpeg',
+      r4: 'PullDown.jpeg',
+      r5: 'PulldownMachine.jpeg',
+      r6: 'ReverseGripRow.jpeg',
+      r7: 'RowMachine.jpeg',
+      r8: 'SeatedRowMachine.jpeg',
+      r9: 'Pullover.jpeg',
+      r10: 'LateralProneRaise.jpeg',
+      r11: 'ReverseButterflyMachine.jpeg',
+      r12: 'ReverseButterflys.jpeg',
+
+      // Schulterübungen
+      s1: 'ShoulderPress.jpeg',
+      s2: 'ShoulderPressMachine.jpeg',
+      s3: 'SideRaises.jpeg',
+      s4: 'ReverseButterflyMachine.jpeg',
+      s5: 'ReverseButterflys.jpeg',
+
+      // Bizepsübungen
+      bi1: 'BicepCurlsSeated.jpeg',
+      bi2: 'BicepsCurl.jpeg',
+      bi3: 'CbumCurls.jpeg',
+      bi4: 'HammerCurls.jpeg',
+      bi5: 'PreacherCurls.jpeg',
+
+      // Trizepsübungen
+      t1: 'CableHighOverheadPull.jpeg',
+      t2: 'CableLowOverheadPull.jpeg',
+      t3: 'FrenchPress.jpeg',
+      t4: 'FrenchPressStanding.jpeg',
+      t5: 'TricepPullDown.jpeg',
+    };
+
+    const imageName = imageMap[exerciseId] || defaultImage;
+
+    return baseUrl + imageName;
   }
 }
