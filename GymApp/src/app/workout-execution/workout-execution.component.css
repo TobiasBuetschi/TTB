@@ -1,30 +1,216 @@
 .workout-execution {
-  padding: 20px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: none !important;
+  color: var(--text-color);
 }
 
 .timer {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  background-color: none;
-  padding: 5px 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.workout-execution-container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: center;
+}
+
+.workout-execution-box {
+  width: 75vw;
+  height: 75vh;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  text-align: center;
+  max-width: 28rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.exercise-image-container {
+  width: 300px;
+  height: 150px;
+  margin: 0 auto 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  margin-bottom: 30px;
+}
+
+.exercise-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.workout-execution-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.workout-execution-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.workout-execution-content::-webkit-scrollbar-track {
+  background: var(--secondary-color);
+}
+
+.workout-execution-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
   border-radius: 5px;
 }
 
+.current-exercise h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
 .set {
-  margin-bottom: 10px;
+  border-radius: 0.5rem;
+  border: 2px solid var(--secondary-color);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.set h4 {
+  margin-bottom: 0.5rem;
+}
+
+input[type="number"] {
+  width: 80px;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  border: 1px solid var(--text-color);
+  border-radius: 0.25rem;
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+button {
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0.5rem 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--primary-color);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .dropset {
-  margin-left: 20px;
-  margin-top: 5px;
+  margin-top: 0.5rem;
+  padding-left: 1rem;
 }
 
 .controls {
-  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
 }
 
 .pause-timer {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  color: var(--text-color);
+}
+
+.no-workout {
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 2rem 0;
+}
+.add-exercise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.add-exercise-content {
+  background-color: var(--primary-color);
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 80%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+.add-exercise-content::-webkit-scrollbar {
+  width: 16px;
+}
+
+.add-exercise-content::-webkit-scrollbar-track {
+  background: var(--secondary-color);
+  border-radius: 0 5px 5px 0;
+}
+
+.add-exercise-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 10px;
+  border: 2px solid var(--secondary-color);
+}
+
+.exercise-list {
   margin-top: 10px;
-  color: red;
+}
+
+.exercise-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.close-button {
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .workout-execution-box {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  input[type="number"] {
+    width: 60px;
+  }
+
+  button {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
 }

@@ -1,35 +1,35 @@
 <div class="workout-summary" *ngIf="workoutSummary">
   <h2>Workout Summary</h2>
   <p>Duration: {{ formatTime(workoutSummary.duration) }}</p>
-
-  <div
-    *ngFor="let exercise of workoutSummary.exercises"
-    class="exercise-summary"
-  >
-    <h3>{{ exercise.name }}</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Set</th>
-          <th>Reps</th>
-          <th>Weight (kg)</th>
-          <th>Drop Set</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let set of exercise.sets; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ set.reps }}</td>
-          <td>{{ set.weight }}</td>
-          <td *ngIf="set.dropSet">
-            {{ set.dropSet.reps }} reps {{ set.dropSet.weight }} kg
-          </td>
-          <td *ngIf="!set.dropSet">-</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="workout-summary-content">
+    <div
+      *ngFor="let exercise of workoutSummary.exercises"
+      class="exercise-summary"
+    >
+      <h3>{{ exercise.name }}</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Set</th>
+            <th>Reps</th>
+            <th>Weight (kg)</th>
+            <th>Drop Set</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let set of exercise.sets; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ set.reps }}</td>
+            <td>{{ set.weight }}</td>
+            <td *ngIf="set.dropSet">
+              {{ set.dropSet.reps }} reps {{ set.dropSet.weight }} kg
+            </td>
+            <td *ngIf="!set.dropSet">-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-
   <div class="actions">
     <button (click)="saveWorkout()">Save Workout</button>
     <button (click)="deleteWorkout()">Delete Workout</button>

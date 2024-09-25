@@ -25,6 +25,7 @@ export class WorkoutExecutionComponent implements OnInit {
   pauseIntervalId: any;
   isLastExercise = false;
   availableExercises: Exercise[] = [];
+  showAddExercise = false;
 
   constructor(
     private router: Router,
@@ -120,16 +121,7 @@ export class WorkoutExecutionComponent implements OnInit {
   }
 
   addExercise(): void {
-    const dialogRef = this.dialog.open(ExerciseSelectionComponent, {
-      width: '500px',
-      data: { exercises: this.availableExercises },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.addExerciseToWorkout(result);
-      }
-    });
+    this.showAddExercise = true;
   }
 
   removeSet(exerciseIndex: number, setIndex: number): void {
@@ -162,6 +154,7 @@ export class WorkoutExecutionComponent implements OnInit {
     this.workout.push(newExerciseSet);
     this.currentExerciseIndex = this.workout.length - 1;
     this.checkIfLastExercise();
+    this.showAddExercise = false;
   }
 
   addDropSet(setIndex: number): void {
@@ -171,9 +164,77 @@ export class WorkoutExecutionComponent implements OnInit {
     }
   }
 
+  removeDropSet(exerciseIndex: number, setIndex: number): void {
+    if (
+      this.workout[exerciseIndex] &&
+      this.workout[exerciseIndex].sets[setIndex]
+    ) {
+      if (this.workout[exerciseIndex].sets[setIndex].dropSet) {
+        this.workout[exerciseIndex].sets[setIndex].dropSet = undefined;
+      }
+    }
+  }
+
   getExerciseName(exerciseId: string): string {
     const currentExercise = this.workout[this.currentExerciseIndex];
     return currentExercise ? currentExercise.exercise.name : 'Unknown Exercise';
+  }
+
+  getExerciseImage(exerciseId: string): string {
+    const baseUrl = 'assets/exercisePictures/';
+    const defaultImage = 'default-exercise.jpg';
+
+    const imageMap: { [key: string]: string } = {
+      // Brustübungen
+      b1: 'Benchpress.jpeg',
+      b2: 'Dumbell Benchpress.jpeg',
+      b3: 'Incline Benchpress.jpeg',
+      b4: 'InclineDumbellBenchpress.jpeg',
+      b5: 'ButterflyNeutral.jpeg',
+      b6: 'ButteflyHighLow.jpeg',
+      b7: 'ButterflyLowHigh.jpeg',
+      b8: 'DumbellButterflys.jpeg',
+      b9: 'ButterflyMachine.jpeg',
+
+      // Rückenübungen
+      r1: 'PullUp.jpeg',
+      r2: 'DumbellRowOnBench.jpeg',
+      r3: 'DumbellRow2.jpeg',
+      r4: 'PullDown.jpeg',
+      r5: 'PulldownMachine.jpeg',
+      r6: 'ReverseGripRow.jpeg',
+      r7: 'RowMachine.jpeg',
+      r8: 'SeatedRowMachine.jpeg',
+      r9: 'Pullover.jpeg',
+      r10: 'LateralProneRaise.jpeg',
+      r11: 'ReverseButterflyMachine.jpeg',
+      r12: 'ReverseButterflys.jpeg',
+
+      // Schulterübungen
+      s1: 'ShoulderPress.jpeg',
+      s2: 'ShoulderPressMachine.jpeg',
+      s3: 'SideRaises.jpeg',
+      s4: 'ReverseButterflyMachine.jpeg',
+      s5: 'ReverseButterflys.jpeg',
+
+      // Bizepsübungen
+      bi1: 'BicepCurlsSeated.jpeg',
+      bi2: 'BicepsCurl.jpeg',
+      bi3: 'CbumCurls.jpeg',
+      bi4: 'HammerCurls.jpeg',
+      bi5: 'PreacherCurls.jpeg',
+
+      // Trizepsübungen
+      t1: 'CableHighOverheadPull.jpeg',
+      t2: 'CableLowOverheadPull.jpeg',
+      t3: 'FrenchPress.jpeg',
+      t4: 'FrenchPressStanding.jpeg',
+      t5: 'TricepPullDown.jpeg',
+    };
+
+    const imageName = imageMap[exerciseId] || defaultImage;
+
+    return baseUrl + imageName;
   }
 
   endWorkout(): void {
