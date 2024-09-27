@@ -14,9 +14,18 @@ export interface WorkoutSet /*for workout-summary.component*/ {
 export interface WorkoutSession {
   id: string;
   date: Date;
-  duration?: number;
-  sets: WorkoutSet[];
-  exercises?: Exercise[];
+  duration: number;
+  exercises: {
+    exerciseId: string;
+    sets: {
+      reps: number;
+      weight: number;
+      dropSet?: {
+        reps: number;
+        weight: number;
+      };
+    }[];
+  }[];
 }
 
 export interface SetII /*for workout-builder.component.ts*/ {

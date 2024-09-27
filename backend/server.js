@@ -16,12 +16,12 @@ mongoose.connect(uri)
   .then(() => console.log('Connection to MongoDB is established'))
   .catch(err => {
     console.error('Connecting to MongoDB failed:', err.message);
-    // Zusätzliche Informationen für Debugging
+
     console.error('Whole error:', err);
     console.error('Connection-URI (without password):', uri.replace(password, '****'));
   });
 
-// Fügen Sie einen Ereignislistener für Verbindungsfehler hinzu
+
 mongoose.connection.on('error', err => {
   console.error('MongoDB Connecting Error:', err);
 });
@@ -34,21 +34,31 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', UserSchema);
 
-// Training Schema
-const TrainingSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+// Workout Schema
+const WorkoutSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, required: true },
   date: { type: Date, default: Date.now },
-  exercises: [{ 
-    name: String,
-    sets: Number,
-    reps: Number,
-    weight: Number
+  duration: { type: Number, required: true },
+  exercises: [{
+    exerciseId: { type: String, required: true },
+    sets: [{
+      reps: { type: Number, required: true },
+      weight: { type: Number, required: true },
+      dropSet: {
+        reps: Number,
+        weight: Number
+      }
+    }]
   }]
 });
 
-const Training = mongoose.model('Training', TrainingSchema);
+const Workout = mongoose.model('Workout', WorkoutSchema);
 
-// Registrierung
+app.get('/', (req, res) => {
+  res.send('Welcome to the Fitness App API');
+});
+
+// Register
 app.post('/api/register', async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -79,25 +89,29 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-// Training speichern
-app.post('/api/training', async (req, res) => {
+
+// Save Workout
+app.post('/api/workouts', async (req, res) => {
   try {
-    const { userId, exercises } = req.body;
-    const training = new Training({ userId, exercises });
-    await training.save();
-    res.status(201).json({ message: 'Training saved successfully' });
+    const workoutData = req.body;
+    if (!workoutData.userId) {
+      return res.status(400).json({ message: 'UserId is required' });
+    }
+    const workout = new Workout(workoutData);
+    await workout.save();
+    res.status(201).json(workout);
   } catch (error) {
-    res.status(400).json({ message: 'Error saving training', error: error.message });
+    res.status(400).json({ message: 'Error saving workout', error: error.message });
   }
 });
 
-// Trainings abrufen
-app.get('/api/training/:userId', async (req, res) => {
+// Get Workouts
+app.get('/api/workouts/:userId', async (req, res) => {
   try {
-    const trainings = await Training.find({ userId: req.params.userId });
-    res.json(trainings);
+    const workouts = await Workout.find({ userId: req.params.userId });
+    res.json(workouts);
   } catch (error) {
-    res.status(400).json({ message: 'Error fetching trainings', error: error.message });
+    res.status(400).json({ message: 'Error fetching workouts', error: error.message });
   }
 });
 

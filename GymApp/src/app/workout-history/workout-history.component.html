@@ -1,1 +1,39 @@
-<p>workout-history works!</p>
+<div class="workout-history">
+  <h2>Workout History</h2>
+  <div *ngFor="let workout of workouts" class="workout-item">
+    <div class="workout-summary" (click)="toggleWorkoutDetails(workout.id)">
+      <span class="workout-date">{{ formatDate(workout.date) }}</span>
+      <span class="workout-muscle-groups">{{
+        getWorkoutMuscleGroups(workout)
+      }}</span>
+    </div>
+    <div *ngIf="expandedWorkoutId === workout.id" class="workout-details">
+      <p>Duration: {{ formatTime(workout.duration) }}</p>
+      <div *ngFor="let exercise of workout.exercises" class="exercise-summary">
+        <h3>{{ getExerciseName(exercise.exerciseId) }}</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Set</th>
+              <th>Reps</th>
+              <th>Weight (kg)</th>
+              <th>Drop Set</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let set of exercise.sets; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ set.reps }}</td>
+              <td>{{ set.weight }}</td>
+              <td *ngIf="set.dropSet">
+                {{ set.dropSet.reps }} reps {{ set.dropSet.weight }} kg
+              </td>
+              <td *ngIf="!set.dropSet">-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button (click)="deleteWorkout(workout.id)">Delete Workout</button>
+    </div>
+  </div>
+</div>

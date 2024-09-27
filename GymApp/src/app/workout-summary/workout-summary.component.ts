@@ -65,12 +65,25 @@ export class WorkoutSummaryComponent implements OnInit {
 
   saveWorkout(): void {
     if (this.workoutSummary) {
-      const workoutSession = <WorkoutSession>{
+      const workoutSession: WorkoutSession = {
         id: this.workoutSummary.id || Date.now().toString(),
         date: this.workoutSummary.date || new Date(),
         duration: this.workoutSummary.duration,
-        sets: this.workoutSummary.sets || [],
+        exercises: this.workoutSummary.exercises.map((exercise) => ({
+          exerciseId: exercise.name,
+          sets: exercise.sets.map((set) => ({
+            reps: set.reps,
+            weight: set.weight,
+            dropSet: set.dropSet
+              ? {
+                  reps: set.dropSet.reps,
+                  weight: set.dropSet.weight,
+                }
+              : undefined,
+          })),
+        })),
       };
+
       this.workoutService.addWorkout(workoutSession).subscribe({
         next: (savedWorkout) => {
           console.log('Workout saved successfully', savedWorkout);

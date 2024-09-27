@@ -243,17 +243,6 @@ export class WorkoutBuilderComponent implements OnInit {
       state: { workout: workoutWithExercises },
     });
   }
-  saveWorkout(): void {
-    const workout: WorkoutSession = {
-      id: Date.now().toString(),
-      date: new Date(),
-      sets: this.currentWorkout,
-    };
-
-    this.workoutService.addWorkout(workout);
-    this.currentWorkout = [];
-    this.selectedExercises = [];
-  }
 
   getExerciseName(exerciseId: string): string {
     const exercise = this.exercises.find((e) => e.id === exerciseId);

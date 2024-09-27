@@ -1,36 +1,44 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { WorkoutSession } from '../models/workout.model';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap, throwError } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WorkoutService {
-  private apiUrl = 'http://localhost:3000/api'; // change when going live
+  private apiUrl = 'http://localhost:3000/api';
   private workouts: WorkoutSession[] = [];
   private workoutsSubject = new BehaviorSubject<WorkoutSession[]>(
     this.workouts
   );
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getWorkouts(): Observable<WorkoutSession[]> {
     return this.workoutsSubject.asObservable();
   }
 
-  loadWorkouts(): Observable<WorkoutSession[]> {
-    return this.http.get<WorkoutSession[]>(`${this.apiUrl}/workouts`).pipe(
-      tap((workouts) => {
-        this.workouts = workouts;
-        this.workoutsSubject.next(this.workouts);
-      })
-    );
+  loadWorkouts(userId: string): Observable<WorkoutSession[]> {
+    return this.http
+      .get<WorkoutSession[]>(`${this.apiUrl}/workouts/${userId}`)
+      .pipe(
+        tap((workouts) => {
+          this.workouts = workouts;
+          this.workoutsSubject.next(this.workouts);
+        })
+      );
   }
 
   addWorkout(workout: WorkoutSession): Observable<WorkoutSession> {
+    const userId = this.authService.getUserId();
+    if (!userId) {
+      return throwError(() => new Error('User not authenticated'));
+    }
+    const workoutWithUserId = { ...workout, userId };
     return this.http
-      .post<WorkoutSession>(`${this.apiUrl}/workouts`, workout)
+      .post<WorkoutSession>(`${this.apiUrl}/workouts`, workoutWithUserId)
       .pipe(
         tap((newWorkout) => {
           this.workouts.push(newWorkout);

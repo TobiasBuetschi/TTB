@@ -1,7 +1,8 @@
 <header>
   <img
-    src="assets/TTBLogo/Untitled_logo_1_free-file.jpg"
+    src="assets/TTBLogo/Untitled_logo_2_free-file.jpg"
     alt="Logo"
     class="logo"
   />
+  <button *ngIf="isLoggedIn" class="user-button">{{ username }}</button>
 </header>

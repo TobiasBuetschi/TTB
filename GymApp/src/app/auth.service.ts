@@ -11,6 +11,8 @@ export class AuthService {
   private apiUrl = 'http://localhost:3000/api';
   private _isLoggedIn = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn.asObservable();
+  private _username = new BehaviorSubject<string>('');
+  username$ = this._username.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
     const token = localStorage.getItem('token');
@@ -23,7 +25,7 @@ export class AuthService {
     password: string;
   }): Observable<any> {
     return this.http
-      .post<any>(`${this.apiUrl}/users/register`, user)
+      .post<any>(`${this.apiUrl}/register`, user)
       .pipe(catchError(this.handleError));
   }
 
@@ -32,8 +34,9 @@ export class AuthService {
       .post<any>(`${this.apiUrl}/login`, { email, password })
       .pipe(
         tap((response: any) => {
-          if (response.token) {
-            localStorage.setItem('token', response.token);
+          if (response.userId) {
+            localStorage.setItem('userId', response.userId);
+            this.setUsername(response.username);
             this._isLoggedIn.next(true);
           }
         }),
@@ -55,6 +58,19 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return this._isLoggedIn.value;
+  }
+
+  setUsername(username: string): void {
+    this._username.next(username);
+    localStorage.setItem('username', username);
+  }
+
+  getUsername(): string {
+    return this._username.value || localStorage.getItem('username') || '';
+  }
+
+  getUserId(): string | null {
+    return localStorage.getItem('userId');
   }
 
   private handleError(error: HttpErrorResponse) {
