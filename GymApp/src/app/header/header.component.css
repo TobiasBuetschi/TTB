@@ -18,16 +18,32 @@ header {
 }
 
 .user-button {
-  background-color: none !important;
-  color: var(--text-color);
+  background-color: transparent;
   border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  margin-left: auto;
   margin-right: 25px;
 }
 
-.user-button:hover {
+.logout-container {
+  position: absolute;
+  top: 100%;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-right: 70px;
+  margin-top: -30px;
+}
+
+.logout-button {
+  color: white;
+  padding: 10px 20px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-button:hover {
   background-color: var(--primary-color);
 }

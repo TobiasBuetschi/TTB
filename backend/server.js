@@ -74,18 +74,21 @@ app.post('/api/register', async (req, res) => {
 // Login
 app.post('/api/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const { usernameOrEmail, password } = req.body;
+    const user = await User.findOne({
+      $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }]
+    });
     if (!user) {
-      return res.status(400).json({ message: 'User not found' });
+      return res.status(400).json({ message: 'Invalid username/email or password' });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'Invalid username/email or password' });
     }
-    res.json({ message: 'Login successful', userId: user._id });
+    res.json({ message: 'Login successful', userId: user._id, username: user.username });
   } catch (error) {
-    res.status(400).json({ message: 'Error logging in', error: error.message });
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'An unexpected error occurred' });
   }
 });
 

@@ -75,7 +75,7 @@ button {
 
 .logged-in-text {
   font-size: 1.125rem;
-  color: #374151;
+  color: var(--text-color);
 }
 
 .logout-button {

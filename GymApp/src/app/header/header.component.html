@@ -4,5 +4,12 @@
     alt="Logo"
     class="logo"
   />
-  <button *ngIf="isLoggedIn" class="user-button">{{ username }}</button>
+  <div class="user-menu" *ngIf="isLoggedIn">
+    <button (click)="toggleLogoutButton()" class="user-button">
+      {{ username }}
+    </button>
+    <div *ngIf="showLogoutButton" class="logout-container">
+      <button (click)="onLogout()" class="logout-button">Logout</button>
+    </div>
+  </div>
 </header>

@@ -12,7 +12,7 @@ import { AuthService } from '../auth.service';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  email: string = '';
+  usernameOrEmail: string = '';
   password: string = '';
   errorMessage: string = '';
   successMessage: string = '';
@@ -20,24 +20,24 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onLogin() {
-    this.authService.login(this.email, this.password).subscribe({
-      next: () => {
-        console.log('Login successful');
-        this.router.navigate(['/dashboard']); // Navigieren Sie zur Dashboard-Seite nach erfolgreicher Anmeldung
+    this.authService.login(this.usernameOrEmail, this.password).subscribe({
+      next: (response) => {
+        console.log('Login successful', response);
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         console.error('Login failed', error);
-        this.errorMessage = 'Invalid email or password. Please try again.';
+        this.errorMessage = error.message || 'An unexpected error occurred';
       },
     });
   }
   onForgotPassword() {
-    if (!this.email) {
+    if (!this.usernameOrEmail) {
       this.errorMessage = 'Please enter your email address.';
       return;
     }
 
-    this.authService.forgotPassword(this.email).subscribe({
+    this.authService.forgotPassword(this.usernameOrEmail).subscribe({
       next: (response) => {
         console.log('Password reset email sent');
         this.successMessage =

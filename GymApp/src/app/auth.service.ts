@@ -17,6 +17,11 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {
     const token = localStorage.getItem('token');
     this._isLoggedIn.next(!!token);
+
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      this._username.next(storedUsername);
+    }
   }
 
   register(user: {
@@ -29,18 +34,31 @@ export class AuthService {
       .pipe(catchError(this.handleError));
   }
 
-  login(email: string, password: string): Observable<any> {
+  login(usernameOrEmail: string, password: string): Observable<any> {
     return this.http
-      .post<any>(`${this.apiUrl}/login`, { email, password })
+      .post<any>(`${this.apiUrl}/login`, { usernameOrEmail, password })
       .pipe(
         tap((response: any) => {
+          console.log('Login response:', response);
           if (response.userId) {
             localStorage.setItem('userId', response.userId);
-            this.setUsername(response.username);
+            if (response.username) {
+              this.setUsername(response.username);
+            } else {
+              console.error('Username not provided in login response');
+              this.setUsername(usernameOrEmail);
+            }
             this._isLoggedIn.next(true);
           }
         }),
-        catchError(this.handleError)
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 400) {
+            return throwError(
+              () => new Error('Invalid username/email or password')
+            );
+          }
+          return throwError(() => new Error('An unexpected error occurred'));
+        })
       );
   }
 
