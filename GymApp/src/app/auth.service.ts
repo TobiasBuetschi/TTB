@@ -15,8 +15,12 @@ export class AuthService {
   username$ = this._username.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
-    const token = localStorage.getItem('token');
-    this._isLoggedIn.next(!!token);
+    this.checkLoginStatus();
+  }
+
+  private checkLoginStatus() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    this._isLoggedIn.next(isLoggedIn);
 
     const storedUsername = localStorage.getItem('username');
     if (storedUsername) {
@@ -42,6 +46,7 @@ export class AuthService {
           console.log('Login response:', response);
           if (response.userId) {
             localStorage.setItem('userId', response.userId);
+            localStorage.setItem('isLoggedIn', 'true');
             if (response.username) {
               this.setUsername(response.username);
             } else {
@@ -51,14 +56,7 @@ export class AuthService {
             this._isLoggedIn.next(true);
           }
         }),
-        catchError((error: HttpErrorResponse) => {
-          if (error.status === 400) {
-            return throwError(
-              () => new Error('Invalid username/email or password')
-            );
-          }
-          return throwError(() => new Error('An unexpected error occurred'));
-        })
+        catchError(this.handleError)
       );
   }
 
@@ -69,8 +67,11 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    localStorage.setItem('isLoggedIn', 'false');
     this._isLoggedIn.next(false);
+    this._username.next('');
     this.router.navigate(['/login']);
   }
 

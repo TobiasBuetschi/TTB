@@ -9,10 +9,15 @@ import { HomeComponent } from './components/home-page/home-page.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WorkoutHistoryComponent } from './workout-history/workout-history.component';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
   { path: 'home-page', component: HomeComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
 
   /*{ path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
   { path: 'logout', loadChildren: () => import('./logout/logout.module').then(m => m.LogoutModule) },
@@ -20,11 +25,35 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: '/home-page', pathMatch: 'full' },
-  { path: 'muscle-group-selector', component: MuscleGroupSelectorComponent },
-  { path: 'workout-selector', component: WorkoutSelectorComponent },
-  { path: 'workout-builder', component: WorkoutBuilderComponent },
-  { path: 'workout-execution', component: WorkoutExecutionComponent },
-  { path: 'workout-summary', component: WorkoutSummaryComponent },
-  { path: 'workout-history', component: WorkoutHistoryComponent },
+  {
+    path: 'muscle-group-selector',
+    component: MuscleGroupSelectorComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'workout-selector',
+    component: WorkoutSelectorComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'workout-builder',
+    component: WorkoutBuilderComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'workout-execution',
+    component: WorkoutExecutionComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'workout-summary',
+    component: WorkoutSummaryComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'workout-history',
+    component: WorkoutHistoryComponent,
+    canActivate: [AuthGuard],
+  },
   { path: '**', redirectTo: '/home-page' },
 ];

@@ -20,6 +20,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.authService.isLoggedIn$.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
+      if (loggedIn) {
+        this.username = this.authService.getUsername();
+      }
     });
 
     this.authService.username$.subscribe((username) => {
