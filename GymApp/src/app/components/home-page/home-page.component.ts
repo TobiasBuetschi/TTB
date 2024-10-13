@@ -32,6 +32,9 @@ export class HomeComponent {
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
+  navigateToDashboard() {
+    this.router.navigate(['/dashboard']);
+  }
 
   get currentYear(): number {
     return new Date().getFullYear();

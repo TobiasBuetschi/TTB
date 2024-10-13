@@ -1,0 +1,144 @@
+.workout-history {
+  width: 75vw;
+  height: 75vh;
+  max-width: 28rem;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: none !important;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.workout-history h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.workout-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.workout-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.workout-list::-webkit-scrollbar-track {
+  background: var(--secondary-color);
+}
+
+.workout-list::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 5px;
+}
+
+.workout-item {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 0.5rem;
+}
+
+.workout-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.workout-date {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.workout-muscle-groups {
+  font-size: 1rem;
+  color: var(--text-color-light);
+}
+
+.workout-details {
+  margin-top: 1rem;
+}
+
+.exercise-summary {
+  margin-bottom: 1rem;
+}
+
+.exercise-summary h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+th,
+td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--secondary-color);
+}
+
+th {
+  font-weight: bold;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border-radius: 5px;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  color: var(--text-color);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: var(--secondary-color);
+  border: none;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: var(--primary-color);
+}
+
+@media (max-width: 600px) {
+  .workout-history {
+    width: 90vw;
+    padding: 1rem;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+
+  th,
+  td {
+    padding: 0.3rem;
+  }
+
+  .workout-summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .workout-date,
+  .workout-muscle-groups {
+    margin-bottom: 0.5rem;
+  }
+}

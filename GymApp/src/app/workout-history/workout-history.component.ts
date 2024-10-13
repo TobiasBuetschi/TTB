@@ -35,6 +35,10 @@ export class WorkoutHistoryComponent implements OnInit {
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           );
           console.log('Workout history loaded', this.workouts);
+          console.log(
+            'Workout IDs:',
+            this.workouts.map((w) => w._id)
+          );
         },
         error: (error) => {
           console.error('Error loading workout history', error);
@@ -46,15 +50,25 @@ export class WorkoutHistoryComponent implements OnInit {
   }
 
   deleteWorkout(workoutId: string): void {
-    this.workoutService.deleteWorkout(workoutId).subscribe({
-      next: () => {
-        console.log('Workout deleted successfully');
-        this.loadWorkoutHistory();
-      },
-      error: (error) => {
-        console.error('Error deleting workout', error);
-      },
-    });
+    if (!workoutId) {
+      console.error('Workout ID is undefined');
+      return;
+    }
+
+    console.log('Attempting to delete workout with ID:', workoutId);
+    if (confirm('Are you sure you want to delete this workout?')) {
+      this.workoutService.deleteWorkout(workoutId).subscribe({
+        next: () => {
+          console.log('Workout deleted successfully');
+          this.workouts = this.workouts.filter(
+            (workout) => workout._id !== workoutId
+          );
+        },
+        error: (error) => {
+          console.error('Error deleting workout', error);
+        },
+      });
+    }
   }
 
   toggleWorkoutDetails(workoutId: string): void {
@@ -63,20 +77,29 @@ export class WorkoutHistoryComponent implements OnInit {
   }
 
   getWorkoutMuscleGroups(workout: WorkoutSession): string {
-    if (!workout.exercises) return '';
+    if (!workout.exercises || workout.exercises.length === 0)
+      return 'No exercises';
 
-    const muscleGroups = new Set(
-      workout.exercises
-        .map((exercise) => {
-          const fullExercise = this.exerciseService.getExerciseById(
-            exercise.exerciseId
-          );
-          return fullExercise ? fullExercise.category : '';
-        })
-        .filter((category) => category !== '')
-    );
+    const muscleGroups = new Set<string>();
 
-    return Array.from(muscleGroups).join(', ');
+    workout.exercises.forEach((exercise) => {
+      const exerciseIdOrName = exercise.exerciseId;
+      let fullExercise = this.exerciseService.getExerciseById(exerciseIdOrName);
+
+      if (!fullExercise) {
+        fullExercise = this.exerciseService
+          .getAllExercises()
+          .find((e) => e.name.toLowerCase() === exerciseIdOrName.toLowerCase());
+      }
+
+      if (fullExercise && fullExercise.category) {
+        muscleGroups.add(fullExercise.category);
+      } else {
+        console.warn(`Exercise not found: ${exerciseIdOrName}`);
+      }
+    });
+
+    return Array.from(muscleGroups).join(', ') || 'Unknown';
   }
 
   formatDate(date: Date | string): string {

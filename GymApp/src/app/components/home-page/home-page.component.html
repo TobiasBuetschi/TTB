@@ -14,6 +14,9 @@
 
     <div *ngIf="isLoggedIn()" class="logged-in-content">
       <p class="logged-in-text">Logged in</p>
+      <button (click)="navigateToDashboard()" class="dashboard-button">
+        Go to my Dashboard
+      </button>
       <button (click)="logout()" class="logout-button">Logout</button>
     </div>
   </div>

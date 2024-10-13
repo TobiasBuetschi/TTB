@@ -200,7 +200,18 @@ export class ExerciseService {
     );
   }
 
-  getExerciseById(id: string): Exercise | undefined {
-    return this.exercises.find((exercise) => exercise.id === id);
+  getExerciseById(idOrName: string): Exercise | undefined {
+    let exercise = this.exercises.find((e) => e.id === idOrName);
+
+    if (!exercise) {
+      exercise = this.exercises.find(
+        (e) => e.name.toLowerCase() === idOrName.toLowerCase()
+      );
+    }
+
+    return exercise;
+  }
+  getAllExercises(): Exercise[] {
+    return this.exercises;
   }
 }

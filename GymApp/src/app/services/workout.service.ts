@@ -31,12 +31,13 @@ export class WorkoutService {
       );
   }
 
-  addWorkout(workout: WorkoutSession): Observable<WorkoutSession> {
+  addWorkout(workout: Partial<WorkoutSession>): Observable<WorkoutSession> {
     const userId = this.authService.getUserId();
     if (!userId) {
       return throwError(() => new Error('User not authenticated'));
     }
     const workoutWithUserId = { ...workout, userId };
+    console.log('Sending workout with userId:', workoutWithUserId);
     return this.http
       .post<WorkoutSession>(`${this.apiUrl}/workouts`, workoutWithUserId)
       .pipe(
@@ -48,13 +49,14 @@ export class WorkoutService {
   }
 
   getWorkoutById(id: string): WorkoutSession | undefined {
-    return this.workouts.find((workout) => workout.id === id);
+    return this.workouts.find((workout) => workout._id === id);
   }
 
   deleteWorkout(id: string): Observable<any> {
+    console.log('Sending delete request for workout ID:', id);
     return this.http.delete(`${this.apiUrl}/workouts/${id}`).pipe(
       tap(() => {
-        this.workouts = this.workouts.filter((workout) => workout.id !== id);
+        this.workouts = this.workouts.filter((workout) => workout._id !== id);
         this.workoutsSubject.next(this.workouts);
       })
     );

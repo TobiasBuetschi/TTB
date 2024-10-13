@@ -12,7 +12,7 @@ export interface WorkoutSet /*for workout-summary.component*/ {
 }
 
 export interface WorkoutSession {
-  id: string;
+  _id?: string;
   date: Date;
   duration: number;
   exercises: {

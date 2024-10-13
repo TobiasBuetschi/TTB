@@ -5,7 +5,7 @@ import { WorkoutService } from '../services/workout.service';
 import { WorkoutSession } from '../models/workout.model';
 
 interface WorkoutSummary {
-  id?: string;
+  _id?: string;
   date?: Date;
   duration: number;
   exercises: {
@@ -44,8 +44,8 @@ export class WorkoutSummaryComponent implements OnInit {
     if (navigation && navigation.extras && navigation.extras.state) {
       this.workoutSummary = <WorkoutSummary>navigation.extras.state['summary'];
       if (this.workoutSummary) {
-        this.workoutSummary.id =
-          this.workoutSummary.id || Date.now().toString();
+        this.workoutSummary._id =
+          this.workoutSummary._id || Date.now().toString();
         this.workoutSummary.date = this.workoutSummary.date || new Date();
         this.workoutSummary.sets = this.workoutSummary.exercises.flatMap(
           (e) => e.sets
@@ -65,8 +65,7 @@ export class WorkoutSummaryComponent implements OnInit {
 
   saveWorkout(): void {
     if (this.workoutSummary) {
-      const workoutSession: WorkoutSession = {
-        id: this.workoutSummary.id || Date.now().toString(),
+      const workoutSession: Partial<WorkoutSession> = {
         date: this.workoutSummary.date || new Date(),
         duration: this.workoutSummary.duration,
         exercises: this.workoutSummary.exercises.map((exercise) => ({
@@ -84,6 +83,8 @@ export class WorkoutSummaryComponent implements OnInit {
         })),
       };
 
+      console.log('Sending workout to server:', workoutSession);
+
       this.workoutService.addWorkout(workoutSession).subscribe({
         next: (savedWorkout) => {
           console.log('Workout saved successfully', savedWorkout);
@@ -91,6 +92,9 @@ export class WorkoutSummaryComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error saving workout', error);
+          if (error.error && error.error.message) {
+            console.error('Server error message:', error.error.message);
+          }
         },
       });
     } else {

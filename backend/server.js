@@ -121,3 +121,23 @@ app.get('/api/workouts/:userId', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
+// Delete Workout
+app.delete('/api/workouts/:id', async (req, res) => {
+  try {
+    const workoutId = req.params.id;
+    console.log('Received delete request for workout ID:', workoutId);
+    if (!workoutId) {
+      return res.status(400).json({ message: 'Workout ID is required' });
+    }
+    const result = await Workout.findByIdAndDelete(workoutId);
+    if (result) {
+      res.json({ message: 'Workout deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'Workout not found' });
+    }
+  } catch (error) {
+    console.error('Error deleting workout:', error);
+    res.status(500).json({ message: 'Error deleting workout', error: error.message });
+  }
+});

@@ -51,7 +51,7 @@ button {
 
 .sign-in-button {
   background-color: var(--secondary-color);
-  color: white;
+  color: var(--text-color);
 }
 
 .sign-in-button:hover {
@@ -60,7 +60,7 @@ button {
 
 .register-button {
   background-color: var(--primary-color);
-  color: white;
+  color: var(--text-color);
 }
 
 .register-button:hover {
@@ -80,16 +80,19 @@ button {
 
 .logout-button {
   background-color: var(--primary-color);
-  color: white;
+  color: var(--text-color);
 }
 
 .logout-button:hover {
   background-color: var(--secondary-color);
 }
+.dashboard-button:hover {
+  background-color: var(--secondary-color);
+}
 
 .footer {
   margin-top: 2rem;
-  color: white;
+  color: var(--text-color);
   text-align: center;
 }
 
