@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { WorkoutService } from '../services/workout.service';
-import { WorkoutSession } from '../models/workout.model';
+import { WorkoutService } from '../../services/workout.service';
+import { WorkoutSession } from '../../models/workout.model';
 
 interface WorkoutSummary {
   _id?: string;

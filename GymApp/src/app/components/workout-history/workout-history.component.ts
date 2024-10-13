@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WorkoutService } from '../services/workout.service';
-import { WorkoutSession } from '../models/workout.model';
-import { AuthService } from '../auth.service';
-import { ExerciseService } from '../services/exercise.service';
+import { WorkoutService } from '../../services/workout.service';
+import { WorkoutSession } from '../../models/workout.model';
+import { AuthService } from '../../auth.service';
+import { ExerciseService } from '../../services/exercise.service';
 
 @Component({
   selector: 'app-workout-history',

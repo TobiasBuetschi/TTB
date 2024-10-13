@@ -2,13 +2,13 @@ import { Routes } from '@angular/router';
 import { MuscleGroupSelectorComponent } from './components/muscle-group-selector/muscle-group-selector.component';
 import { WorkoutSelectorComponent } from './components/workout-selector/workout-selector.component';
 import { WorkoutBuilderComponent } from './components/workout-builder/workout-builder.component';
-import { WorkoutExecutionComponent } from './workout-execution/workout-execution.component';
-import { WorkoutSummaryComponent } from './workout-summary/workout-summary.component';
-import { RegisterComponent } from './register/register.component';
+import { WorkoutExecutionComponent } from './components/workout-execution/workout-execution.component';
+import { WorkoutSummaryComponent } from './components/workout-summary/workout-summary.component';
+import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home-page/home-page.component';
-import { LoginComponent } from './login/login.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { WorkoutHistoryComponent } from './workout-history/workout-history.component';
+import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { WorkoutHistoryComponent } from './components/workout-history/workout-history.component';
 import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [

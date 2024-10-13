@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ExerciseService } from '../services/exercise.service';
-import { SetII, SetIII } from '../models/workout.model';
-import { Exercise } from '../models/exercise.model';
+import { ExerciseService } from '../../services/exercise.service';
+import { SetII, SetIII } from '../../models/workout.model';
+import { Exercise } from '../../models/exercise.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ExerciseSelectionComponent } from '../exercise-selection/exercise-selection.component';
 
