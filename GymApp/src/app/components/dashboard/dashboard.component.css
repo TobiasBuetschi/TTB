@@ -1,23 +1,31 @@
 .dashboard-container {
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 4rem auto 0;
+  height: calc(100vh - 60px); /* Berücksichtigt den 60px Abstand vom Body */
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .dashboard-box {
-  width: 75vw;
-  height: 75vh;
+  width: 100%;
+  max-width: 28rem;
+  margin-top: 5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
   padding: 2rem;
   border-radius: 0.5rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
   text-align: center;
-  max-width: 28rem;
-  width: 100%;
+  overflow-y: auto;
+  max-height: calc(100vh - 120px); /* Verhindert Überlauf */
 }
+
 h1 {
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
 }
@@ -26,22 +34,55 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   gap: 1rem;
 }
 
 button {
-  height: 120px;
-  width: 200px;
+  height: 100px;
+  width: 100%;
+  max-width: 200px;
+  margin-bottom: 1rem;
 }
 
 button:hover {
-  background-color: var(--primary-color);
+  opacity: 0.8;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
 }
 
 @media (min-width: 640px) {
+  .dashboard-box {
+    padding: 2rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
   .button-container {
     flex-direction: row;
-    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    width: calc(50% - 1rem);
+    max-width: 200px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-box {
+    max-width: 36rem;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+  }
+
+  button {
+    height: 120px;
+    width: 200px;
   }
 }
