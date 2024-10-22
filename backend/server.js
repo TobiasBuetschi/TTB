@@ -122,20 +122,18 @@ app.get('/api/workouts/:userId', async (req, res) => {
   }
 });
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('dist/gym-app'));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/gym-app/index.html'));
-  });
-}
+app.use(express.static(path.join(__dirname, '../GymApp/dist/gym-app')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../GymApp/dist/gym-app/index.html'));
+});
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
-});
-
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
 });
 
 // Delete Workout

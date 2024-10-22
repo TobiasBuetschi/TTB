@@ -1,4 +1,17 @@
 {
+  "name": "gym-app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node backend/server.js",
+    "heroku-postbuild": "cd frontend && npm install && npm run build && cd ../backend && npm install"
+  },
+  "engines": {
+    "node": "20.17.0",
+    "npm": "10.8.2"
+  },
+  "dependencies": {
+    "express": "^4.21.1"
+  },
   "devDependencies": {
     "angular-cli-ghpages": "^2.0.1"
   }
