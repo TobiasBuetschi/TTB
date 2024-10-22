@@ -1,15 +1,17 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 
 const app = express();
-const port = 3000;
-const password = encodeURIComponent('Tiger187BIT!');
-const uri = `mongodb://turborudy:${password}@localhost:27017/fitness_app?authSource=admin`;
+const port = process.env.PORT || 3000;
+const uri = process.env.MONGODB_URI;
 
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'https://tobiasbuetschi.github.io'
+}));
 app.use(express.json());
 
 mongoose.connect(uri)
