@@ -3,14 +3,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
 const uri = process.env.MONGODB_URI;
 
-
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'https://tobiasbuetschi.github.io'
+  origin: ['https://tobiasbuetschi.github.io', 'https://tobystrackbook-276004f61612.herokuapp.com']
 }));
 app.use(express.json());
 
@@ -18,10 +18,12 @@ mongoose.connect(uri)
   .then(() => console.log('Connection to MongoDB is established'))
   .catch(err => {
     console.error('Connecting to MongoDB failed:', err.message);
-
     console.error('Whole error:', err);
-    console.error('Connection-URI (without password):', uri.replace(password, '****'));
   });
+
+mongoose.connection.on('error', err => {
+  console.error('MongoDB Connecting Error:', err);
+});
 
 
 mongoose.connection.on('error', err => {
@@ -118,6 +120,18 @@ app.get('/api/workouts/:userId', async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: 'Error fetching workouts', error: error.message });
   }
+});
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('dist/gym-app'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/gym-app/index.html'));
+  });
+}
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
 app.listen(port, () => {
