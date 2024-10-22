@@ -2,8 +2,8 @@
   "name": "gym-app",
   "version": "1.0.0",
   "scripts": {
-    "start": "node backend/server.js",
-    "heroku-postbuild": "cd frontend && npm install && npm run build && cd ../backend && npm install"
+    "start": "node index.js",
+    "heroku-postbuild": "cd frontend && npm install && npm run build"
   },
   "engines": {
     "node": "20.17.0",
