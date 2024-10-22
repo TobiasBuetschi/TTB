@@ -1,0 +1,15 @@
+<header>
+  <img
+    src="assets/TTBLogo/Untitled_logo_2_free-file.jpg"
+    alt="Logo"
+    class="logo"
+  />
+  <div class="user-menu" *ngIf="isLoggedIn">
+    <button (click)="toggleLogoutButton()" class="user-button">
+      {{ username }}
+    </button>
+    <div *ngIf="showLogoutButton" class="logout-container">
+      <button (click)="onLogout()" class="logout-button">Logout</button>
+    </div>
+  </div>
+</header>

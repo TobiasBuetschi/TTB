@@ -1,0 +1,25 @@
+<app-header></app-header>
+
+<div class="content">
+  <router-outlet></router-outlet>
+
+  <app-muscle-group-selector
+    *ngIf="showMuscleGroupSelector"
+    (selectionConfirmed)="onMuscleGroupsSelected($event)"
+  >
+  </app-muscle-group-selector>
+
+  <app-workout-selector
+    *ngIf="showWorkoutSelector"
+    [selectedMuscleGroups]="selectedMuscleGroups"
+    (selectionMade)="onWorkoutTypeSelected($event)"
+  >
+  </app-workout-selector>
+
+  <app-workout-builder
+    *ngIf="showWorkoutBuilder"
+    [selectedMuscleGroups]="selectedMuscleGroups"
+    [isRandomWorkout]="isRandomWorkout"
+  >
+  </app-workout-builder>
+</div>
