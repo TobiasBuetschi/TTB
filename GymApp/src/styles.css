@@ -1,0 +1,119 @@
+/*.kanit-thin {
+  font-family: "Kanit", system-ui;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.kanit-extralight {
+  font-family: "Kanit", system-ui;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.kanit-light {
+  font-family: "Kanit", system-ui;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.kanit-regular {
+  font-family: "Kanit", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.kanit-medium {
+  font-family: "Kanit", system-ui;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.kanit-semibold {
+  font-family: "Kanit", system-ui;
+  font-weight: 600;
+  font-style: normal;
+}
+  
+<weight>: Use a value from 100 to 900
+
+.outfit{
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}*/
+
+:root {
+  --primary-color: #02045e;
+  --secondary-color: #208eafc9;
+  --text-color: #ffffff;
+  background: linear-gradient(
+    -45deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  height: 100vh;
+  width: 100vw;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+body {
+  margin: 60px auto;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  color: var(--text-color);
+}
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+div {
+  font-family: "Kanit", sans-serif !important;
+}
+
+/*button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: none;
+  color: var(--text-color);
+  border: 5px linear-gradient(-45deg, #00039c, #23abd5c9);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+}*/
+button {
+  width: 100%;
+  background: linear-gradient(
+    -45deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  color: var(--text-color);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+  padding: 10px 20px;
+}

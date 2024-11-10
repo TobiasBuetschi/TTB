@@ -1,0 +1,149 @@
+.workout-selector-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem 1rem 0;
+  overflow: hidden;
+}
+
+.workout-selector-box {
+  width: 90vw;
+  max-width: 28rem;
+  height: auto;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  opacity: 0.8;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.workout-selector-box:hover {
+  opacity: 1;
+  transform: translateY(-4px);
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  color: var(--text-color);
+  margin-bottom: 2rem;
+}
+
+h3 {
+  font-size: 1.125rem;
+  color: var(--text-color);
+  margin-top: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 1.875rem;
+}
+
+li {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  padding: 0.5rem 0.9375rem;
+  margin: 0.3125rem;
+  border-radius: 1.25rem;
+  display: inline-block;
+  font-size: 0.875rem;
+  opacity: 0.8;
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+li:hover {
+  opacity: 1;
+  transform: translateY(-4px);
+}
+
+button {
+  width: calc(100% - 0.5rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.9375rem 1.875rem;
+  margin: 0.625rem auto;
+  border-radius: 0.375rem;
+  opacity: 0.8;
+  transform: translateY(-2px);
+  box-shadow: inset -1px -1px -1px rgba(255, 255, 255, 0.5),
+    inset -2px -2px -2px rgba(0, 0, 0, 0.05);
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: white;
+  background-color: var(--primary-color);
+  transition: 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+  opacity: 0.9;
+  transform: translateY(-4px);
+}
+
+button:focus {
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .workout-selector-box {
+    padding: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  li {
+    font-size: 0.8125rem;
+    padding: 0.4375rem 0.8125rem;
+  }
+
+  button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .workout-selector-box {
+    padding: 1.25rem;
+  }
+
+  h2 {
+    font-size: 1.125rem;
+  }
+
+  h3 {
+    font-size: 0.9375rem;
+  }
+
+  li {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+  }
+
+  button {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+}

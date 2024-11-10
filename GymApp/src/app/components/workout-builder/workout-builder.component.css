@@ -1,0 +1,391 @@
+.workout-builder-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.workout-builder-box {
+  width: 90vw;
+  max-width: 28rem;
+  height: 90vh;
+  max-height: 800px;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  opacity: 0.8;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  background-color: none;
+  overflow: hidden;
+}
+
+.workout-builder-box:hover {
+  opacity: 1;
+  transform: translateY(-4px);
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 1.25rem;
+}
+
+h3 {
+  font-size: 1.125rem;
+  color: var(--text-color);
+  margin-top: 1.25rem;
+  margin-bottom: 0.625rem;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 1.25rem;
+}
+
+li {
+  border: 2px solid var(--secondary-color);
+  border-radius: 0.3125rem;
+  padding: 0.625rem;
+  margin-bottom: 0.625rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.exercise-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.image-container {
+  width: 10rem;
+  height: 5rem;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 0.3125rem;
+}
+
+.exercise-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.exercise-details {
+  flex: 1;
+  overflow: hidden;
+}
+
+.exercise-name {
+  font-weight: bold;
+  margin-bottom: 0.625rem;
+  text-align: center;
+  width: 100%;
+}
+
+.second-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.sets-input {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.625rem;
+  margin-left: 0.9375rem;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.sets-button {
+  width: 1.875rem;
+  height: 1.875rem;
+  border: none;
+  background-color: var(--secondary-color);
+  color: white;
+  font-size: 1.125rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.sets-button:hover {
+  background-color: var(--primary-color);
+}
+
+.sets-input input[type="number"] {
+  width: 3.125rem;
+  text-align: center;
+  border: 1px solid var(--secondary-color);
+  padding: 0.3125rem;
+}
+
+label {
+  margin-right: 0.625rem;
+}
+
+input[type="number"] {
+  width: 3.125rem;
+  color: var(--text-color);
+  font-weight: bold;
+  background: none !important;
+  border-radius: 0.3125rem;
+  border: 2px solid var(--secondary-color);
+  padding: 0 0.3125rem;
+}
+
+select {
+  width: auto;
+  padding: 0.3125rem;
+  margin-left: 0.625rem;
+  color: var(--text-color);
+  font-weight: bold;
+  background: none !important;
+  border-radius: 0.3125rem;
+  border: 2px solid var(--secondary-color);
+  cursor: pointer;
+}
+
+select option {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 0.3125rem;
+}
+
+button {
+  width: calc(100% - 0.5rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.9375rem 1.875rem;
+  margin: 0.625rem auto;
+  border-radius: 0.375rem;
+  opacity: 0.8;
+  transform: translateY(-2px);
+  box-shadow: inset -1px -1px -1px rgba(255, 255, 255, 0.5),
+    inset -2px -2px -2px rgba(0, 0, 0, 0.05);
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: white;
+  background-color: var(--primary-color);
+  transition: 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--secondary-color);
+  opacity: 0.9;
+  transform: translateY(-4px);
+}
+
+button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.exercise-actions {
+  display: flex;
+  align-items: center;
+}
+
+.remove-icon,
+.drag-handle {
+  cursor: pointer;
+  margin-left: 0.625rem;
+  font-size: 1.125rem;
+  transition: color 0.3s ease;
+}
+
+.remove-icon:hover,
+.drag-handle:hover {
+  color: #e74c3c;
+}
+
+.addButton,
+.replaceExerciseButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  line-height: 1;
+  padding: 0;
+}
+
+.addButton {
+  border: 2px solid var(--secondary-color);
+  border-radius: 50%;
+  width: 4.6875rem;
+  height: 4.6875rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.replaceExerciseButton {
+  width: 2.8125rem;
+  height: 2.8125rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.start-button {
+  background-color: var(--secondary-color);
+  margin-top: 2.5rem;
+}
+
+.workout-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 1rem;
+  margin-right: -1rem;
+}
+
+.workout-content::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.workout-content::-webkit-scrollbar-track {
+  background: var(--secondary-color);
+}
+
+.workout-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .workout-builder-box {
+    padding: 1.5rem;
+    height: 95vh;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  .exercise-content {
+    flex-direction: column;
+  }
+
+  .image-container {
+    width: 100%;
+    height: 4rem;
+    margin-bottom: 0.625rem;
+  }
+
+  .second-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .input-row {
+    margin-left: 0;
+    margin-bottom: 0.3125rem;
+  }
+
+  select,
+  input[type="number"] {
+    margin-top: 0.3125rem;
+  }
+
+  .addButton,
+  .replaceExerciseButton {
+    width: 3.75rem;
+    height: 3.75rem;
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .workout-builder-container {
+    align-items: flex-start;
+    padding-top: 6rem;
+  }
+
+  .workout-builder-box {
+    padding: 1.5rem;
+    height: calc(100vh - 10rem);
+    max-height: none;
+  }
+
+  h2 {
+    font-size: 1.125rem;
+  }
+
+  h3 {
+    font-size: 0.9375rem;
+  }
+
+  .exercise-name {
+    font-size: 0.875rem;
+  }
+
+  .sets-button,
+  .replaceExerciseButton {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+  }
+
+  .addButton {
+    width: 3.125rem;
+    height: 3.125rem;
+    font-size: 1rem;
+  }
+
+  button {
+    font-size: 0.9375rem;
+    padding: 0.75rem 1.5rem;
+  }
+  select {
+    width: 150px;
+  }
+}
