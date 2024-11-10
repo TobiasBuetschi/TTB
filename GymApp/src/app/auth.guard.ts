@@ -16,21 +16,15 @@ import { map, take } from 'rxjs/operators';
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
+  canActivate(): Observable<boolean> {
     return this.authService.isLoggedIn$.pipe(
       take(1),
       map((isLoggedIn) => {
-        if (isLoggedIn) {
+        if (isLoggedIn || this.authService.isGuestMode) {
           return true;
         } else {
-          return this.router.createUrlTree(['/login']);
+          this.router.navigate(['/login']);
+          return false;
         }
       })
     );

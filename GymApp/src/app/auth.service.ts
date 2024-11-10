@@ -13,6 +13,7 @@ export class AuthService {
   isLoggedIn$ = this._isLoggedIn.asObservable();
   private _username = new BehaviorSubject<string>('');
   username$ = this._username.asObservable();
+  isGuestMode: boolean = false;
 
   constructor(private http: HttpClient, private router: Router) {
     this.checkLoginStatus();
@@ -90,6 +91,14 @@ export class AuthService {
 
   getUserId(): string | null {
     return localStorage.getItem('userId');
+  }
+
+  enterGuestMode() {
+    this.isGuestMode = true;
+  }
+
+  exitGuestMode() {
+    this.isGuestMode = false;
   }
 
   private handleError(error: HttpErrorResponse) {

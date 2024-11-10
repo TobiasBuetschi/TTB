@@ -57,4 +57,9 @@ export class LoginComponent {
     console.log('Sign up clicked');
     this.router.navigate(['/register']);
   }
+
+  enterGuestMode() {
+    this.authService.enterGuestMode();
+    this.router.navigate(['/dashboard']);
+  }
 }
